@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-var fs = require('fs');
-var shell = require('shelljs');
+var fs = require('fs')
+var shell = require('shelljs')
+var path = require('path')
 
 const args = process.argv.slice(2);
 
@@ -159,7 +160,8 @@ async function test(fl,i) {
 
 function parseContest(link) {
     console.log('Parsing contest => [' + link.split('/')[4] + '] Please wait...') 
-    command = 'python scrapper.py ' + link
+    var scrapperpath = path.resolve(__dirname,'scrapper.py ')
+    command = 'python ' + scrapperpath + link
     shell.exec(command)
 }
 

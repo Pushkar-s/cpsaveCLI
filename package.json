@@ -1,0 +1,22 @@
+{
+  "name": "cpsavecli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cpsaveCLI.js",
+  "bin":{
+    "cpsavecli" : "cpsaveCLI.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pushkar-s/cpsaveCLI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pushkar-s/cpsaveCLI/issues"
+  },
+  "homepage": "https://github.com/Pushkar-s/cpsaveCLI#readme"
+}

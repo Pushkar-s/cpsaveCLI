@@ -1,7 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
+import sys
 
-contest_link = 'https://codeforces.com/contest/1458'
+# print(sys.argv[1])
+
+contest_link = sys.argv[1]
 source = requests.get(contest_link).text
 soup = BeautifulSoup(source, 'lxml')
 # print(soup.prettify())
@@ -25,7 +28,7 @@ for problem in problems:
     print('Scrapping ' + problem_type)
     x = 0
     for input in soup.find_all('div', class_='input'):
-        filename = problem_type + '_in_' + chr(ord('1') + x)
+        filename = './test/' + problem_type + '_in_' + chr(ord('1') + x)
         fl = open(filename, 'w')
         t = input.pre.text
         t = "".join([s for s in t.strip().splitlines(True) if s.strip()])
@@ -36,7 +39,7 @@ for problem in problems:
 
     x = 0
     for output in soup.find_all('div', class_='output'):
-        filename = problem_type + '_out_' + chr(ord('1') + x)
+        filename = './test/' + problem_type + '_out_' + chr(ord('1') + x)
         fl = open(filename, 'w')
         t = output.pre.text
         t = "".join([s for s in t.strip().splitlines(True) if s.strip()])

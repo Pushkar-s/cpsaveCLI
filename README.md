@@ -15,7 +15,7 @@
 ## Install
 Install the package globally 
 ```console
-$ npm install chalk -g
+$ npm install cpsavecli -g
 ```
 ## Usage
 Initialize the current directory with test files inside **Test** folder

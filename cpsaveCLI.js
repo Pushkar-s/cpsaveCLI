@@ -2,14 +2,25 @@
 var fs = require('fs')
 var shell = require('shelljs')
 var path = require('path')
+const chalk = require('chalk');
+const figlet = require("figlet");
+const clui = require('clui')
+const Spinner = clui.Spinner
+var countdown = new Spinner('Compiling...  ', ['⣾','⣽','⣻','⢿','⡿','⣟','⣯','⣷']);
 
 const args = process.argv.slice(2);
 
 
 function compile(fl) {
-    console.log("compiling "+fl+".cpp");
-    shell.exec('g++ -std=c++17 '+fl+'.cpp -Wall');
-    console.log("compile successfull");
+    countdown.message('compiling '+fl+'.cpp..');
+    countdown.start()
+    shell.exec('g++ -std=c++17 '+fl+'.cpp -Wall',(err)=>{
+        if (!err) {
+            countdown.stop()
+            console.log(chalk.black.bgGrey("Compiled") + chalk.green.bgBlack(":)"));
+        }
+    });
+    
 }
 
 
@@ -34,6 +45,8 @@ const createFolder = new Promise((resolve,reject) => {
                 resolve("folder created")
             }
         })
+    } else {
+        resolve('folder already exists')
     }
 })
 
@@ -103,10 +116,13 @@ async function test(fl,i) {
     var testcase = i.toString();
     const path   = './test/'+fl+'_out_'+ testcase;
     const pathin = './test/'+fl+'_in_'+ testcase;
+    countdown.message('Test ' + testcase)
+    countdown.start()
     let fileexistPromise = new Promise ((resolve,reject)=>{
         fs.access(path,fs.F_OK,(err)=>{
             if (err) {
                 // file not found
+                countdown.stop()
             } else {
                 resolve('found')
             }
@@ -114,6 +130,7 @@ async function test(fl,i) {
     })
     let result = await fileexistPromise
     // console.log(result)
+    
     let executeAout = new Promise ((resolve,reject)=>{ 
         shell.exec('./a.out < '+ pathin +' > '+'output',(err)=>{
             if (err) {
@@ -139,7 +156,7 @@ async function test(fl,i) {
                 var status = "Pending"
                 if (ok == true) {
                     // console.log("ACCEPTED")
-                    status = "ACCEPTED"
+                    status = " ACCEPTED "
                 }
                 else {
                     for (var i=0; i < correct.length; i++) {
@@ -147,33 +164,50 @@ async function test(fl,i) {
                         if (correct[i] != test[i]) ok = false;
                     }
                     // console.log("WRONG ANSWER");
-                    status = "WRONG ANSWER"
+                    status = " WRONG ANSWER "
                 }
                 resolve(status)
             });
         });
     })
     result = await checkresult;
-    console.log(result)
+    if (result == " ACCEPTED ") {
+        console.log("Test "+testcase + ": " + chalk.bgGreen(result));
+    } else {
+        console.log("Test "+testcase + ": " + chalk.bgRed(result));
+    }
+    countdown.stop()
     if (i < 10) test(fl,i+1)
 }
 
 function parseContest(link) {
-    console.log('Parsing contest => [' + link.split('/')[4] + '] Please wait...') 
+    countdown.start()
+    console.log(chalk.cyan.italic('Contest => [' + link.split('/')[4] + ']')) 
+    countdown.message('Parsing Contest Please wait...');
     var scrapperpath = path.resolve(__dirname,'scrapper.py ')
     command = 'python ' + scrapperpath + link
-    shell.exec(command)
+    shell.exec(command,(err)=>{
+        if (!err) {
+            countdown.stop()
+            console.log(chalk.black.italic.bgGrey('    All Problems parsed    ')) 
+        }
+    })
+}
+
+
+function init(link) {
+    console.log(chalk.red.bold(figlet.textSync('cpsavecli', {horizontalLayout: 'full',}))) 
+    createFolder
+    .then(ok=>{
+        parseContest(link)
+    }).catch(err=>{
+        console.log(err)
+    })
 }
 
 
 if (args[0] == 'init') {
-    createFolder
-    .then(ok=>{
-        // console.log(ok)
-        parseContest(args[1])
-    }).catch(err=>{
-        console.log(err)
-    })
+    init(args[1])
 }else if (args[0] == 'c') {
     compile(args[1])
 } else if (args[0] == 't'){

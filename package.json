@@ -20,6 +20,10 @@
   },
   "homepage": "https://github.com/Pushkar-s/cpsaveCLI#readme",
   "dependencies": {
+    "chalk": "^4.1.0",
+    "clui": "^0.3.6",
+    "figlet": "^1.5.0",
+    "path": "^0.12.7",
     "shelljs": "^0.8.4"
   }
 }

@@ -18,6 +18,7 @@ for problem_link in problem_set.find_all('a'):
 problems = list(set(problems))
 # print(problems)
 
+pt = []
 for problem in problems:
     problem_link = problem
     source = requests.get(problem_link).text
@@ -25,7 +26,8 @@ for problem in problems:
 
     problem_type = soup.find('div', class_='title').text.split('.')[0]
     # print(problem_type)
-    print('Scrapping ' + problem_type)
+    # print('Scrapping ' + problem_type)
+    pt.append(problem_type)
     x = 0
     for input in soup.find_all('div', class_='input'):
         filename = './test/' + problem_type + '_in_' + chr(ord('1') + x)
@@ -47,3 +49,6 @@ for problem in problems:
         fl.write(t)
         fl.close()
         x += 1
+
+pt.sort()
+print(pt)

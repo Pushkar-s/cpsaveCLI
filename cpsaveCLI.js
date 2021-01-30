@@ -20,7 +20,6 @@ function compile(fl) {
             console.log(chalk.black.bgGrey("Compiled") + chalk.green.bgBlack(":)"));
         }
     });
-    
 }
 
 
@@ -205,9 +204,24 @@ function init(link) {
     })
 }
 
+function createCppFile(fname) {
+    var content = ''
+    fname = fname.toUpperCase()
+    if (!fs.existsSync(fname+'.cpp')) {
+        fs.writeFile(fname + '.cpp',content,(err) => {
+            if (!err) {
+                shell.exec('open ' + fname + '.cpp')
+            }
+        })
+    } else {
+        shell.exec('open ' + fname + '.cpp')
+    }
+}
 
 if (args[0] == 'init') {
     init(args[1])
+}if (args[0] == 'solve') {
+    createCppFile(args[1])
 }else if (args[0] == 'c') {
     compile(args[1])
 } else if (args[0] == 't'){

@@ -23,12 +23,12 @@ Initialize the current directory with test files inside **Test** folder
 ```console
 $ cpsavecli init [contest_link]
 ```
-![](initCommand.gif)
+![](https://github.com/Pushkar-s/cpsaveCLI/blob/master/readmeMedia/initCommand.gif)
 Create Cpp files to write solutions
 ``` console
 $ cpsavecli solve [name]
 ```
-![](solveCommand.gif)
+![](https://github.com/Pushkar-s/cpsaveCLI/blob/master/readmeMedia/solveCommand.gif)
 Compile Solutions to check for Errors
 - **'c'** -Tells CLI to compile file with name as **[name]**
 ``` console
@@ -39,10 +39,11 @@ Test solutions with Correct Results
 ``` console
 $ cpsavecli t [name]
 ```
-![](ctCommand.gif)
+![](https://github.com/Pushkar-s/cpsaveCLI/blob/master/readmeMedia/ctCommand.gif)
 Compile and Test solutions with one command
 ``` console
 $ cpsavecli ct [name]
 ```
  Finally look at the **WRONG ANSWER** result. **Yeah That's Perfect!** cuz **Its the law**
 
+![](https://github.com/Pushkar-s/cpsaveCLI/blob/master/readmeMedia/IMG_20210130_182650.jpg)

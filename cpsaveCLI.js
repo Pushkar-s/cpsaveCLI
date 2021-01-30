@@ -220,7 +220,7 @@ function createCppFile(fname) {
 
 if (args[0] == 'init') {
     init(args[1])
-}if (args[0] == 'solve') {
+}else if (args[0] == 'solve') {
     createCppFile(args[1])
 }else if (args[0] == 'c') {
     compile(args[1])
